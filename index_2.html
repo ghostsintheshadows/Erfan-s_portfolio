@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Erfan Jahanbazi | Portfolio (EN/FA - Real Form + Video Guide)</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Vazirmatn', sans-serif;
+      background-color: #fcfcfc;
+      color: #1a1a2e;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* Base LTR */
+    body {
+      direction: ltr;
+      text-align: left;
+    }
+
+    /* RTL overrides for Persian */
+    body.lang-fa {
+      direction: rtl;
+      text-align: right;
+      font-family: 'Vazirmatn', 'Inter', sans-serif;
+      letter-spacing: 0;
+    }
+    body.lang-fa p, 
+    body.lang-fa li, 
+    body.lang-fa .skill-card p, 
+    body.lang-fa .hero-desc,
+    body.lang-fa .knowledge-box p {
+      font-weight: 400;
+      line-height: 1.65;
+    }
+    body.lang-fa .section-title {
+      font-weight: 700;
+    }
+    body.lang-fa .section-title:after {
+      left: auto;
+      right: 0;
+    }
+    body.lang-fa .info-list li i,
+    body.lang-fa .contact-details li i,
+    body.lang-fa .knowledge-box h4 i {
+      margin-left: 0.5rem;
+      margin-right: 0;
+    }
+    body.lang-fa .btn i,
+    body.lang-fa .hero-content .btn i {
+      transform: scaleX(-1);
+      display: inline-block;
+    }
+    body.lang-fa .hero-stats {
+      justify-content: flex-start;
+    }
+    /* Navbar: button always on far right */
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .lang-switch {
+      margin-left: auto;
+      display: flex;
+      gap: 0.5rem;
+    }
+    body.lang-fa .lang-switch {
+      margin-left: 0;
+      margin-right: auto;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.02);
+      z-index: 100;
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #c31432, #240b36);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-weight: 500;
+      color: #2d2f3b;
+      transition: 0.2s;
+      font-size: 0.95rem;
+    }
+    .nav-links a:hover {
+      color: #c31432;
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: 1px solid #c31432;
+      padding: 0.3rem 0.8rem;
+      border-radius: 30px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.8rem;
+      transition: 0.2s;
+      color: #c31432;
+    }
+    .lang-btn.active {
+      background: #c31432;
+      color: white;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #1a1a2e;
+      color: white;
+      padding: 0.8rem 1.8rem;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.25s;
+      border: none;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #1a1a2e;
+      color: #1a1a2e;
+    }
+    .btn-outline:hover {
+      background: #1a1a2e;
+      color: white;
+    }
+    .btn-primary:hover {
+      background: #c31432;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -8px rgba(195, 20, 50, 0.4);
+    }
+    .btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .hero {
+      padding: 5rem 0 3rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    body.lang-fa .hero {
+      flex-direction: row-reverse;
+    }
+    .hero-content {
+      flex: 1;
+      min-width: 280px;
+    }
+    .hero-badge {
+      background: #ffe2e6;
+      color: #c31432;
+      display: inline-block;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+    .hero-content h1 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .hero-content h1 span {
+      background: linear-gradient(120deg, #c31432, #5a1e46);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: #4a4a5a;
+      max-width: 500px;
+      margin: 1rem 0 2rem;
+    }
+    body.lang-fa .hero-desc {
+      max-width: 100%;
+    }
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1a1a2e;
+    }
+    .stat-label {
+      font-size: 0.8rem;
+      color: #6c6c7a;
+      letter-spacing: 0.3px;
+    }
+    .hero-image {
+      flex: 0.8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero-image .avatar-placeholder {
+      width: 280px;
+      height: 280px;
+      background: linear-gradient(145deg, #f0eef3, #e0dce8);
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.2);
+    }
+    .avatar-placeholder i {
+      font-size: 7rem;
+      color: #c31432;
+      opacity: 0.8;
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 0;
+      width: 60px;
+      height: 4px;
+      background: #c31432;
+      border-radius: 4px;
+    }
+
+    .about {
+      padding: 4rem 0;
+      background: #ffffff;
+      border-radius: 32px;
+    }
+    .about-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      align-items: flex-start;
+    }
+    .about-text {
+      flex: 2;
+    }
+    .about-text p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      color: #2c2c3a;
+    }
+    .info-list {
+      list-style: none;
+      margin-top: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 0.8rem;
+    }
+    .info-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+    }
+    body.lang-fa .info-list li {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+    .info-list i {
+      width: 28px;
+      color: #c31432;
+      font-size: 1.1rem;
+    }
+
+    .skills-section {
+      padding: 4rem 0;
+      background: #f8f7fc;
+    }
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .skill-card {
+      background: white;
+      border-radius: 28px;
+      padding: 2rem 1.5rem;
+      flex: 1 1 260px;
+      transition: all 0.2s;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.02);
+      border: 1px solid #efefef;
+    }
+    .skill-card i {
+      font-size: 2.3rem;
+      background: linear-gradient(135deg, #c31432, #5a1e46);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 1.2rem;
+    }
+    .skill-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+    }
+    .skill-card p {
+      color: #5a5a6e;
+      font-size: 0.9rem;
+    }
+
+    .work {
+      padding: 4rem 0;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .project-item {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s, cursor 0.2s;
+      cursor: pointer;
+    }
+    .project-item:hover {
+      transform: translateY(-6px);
+    }
+    .project-img {
+      background: #ddd5e6;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2d2f3b;
+      font-size: 3rem;
+      overflow: hidden;
+    }
+    .project-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.2s;
+      cursor: pointer;
+    }
+    .project-info {
+      padding: 1.5rem;
+    }
+    .project-info h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+    .project-info p {
+      font-size: 0.85rem;
+      color: #6c6c7a;
+    }
+    .tag {
+      display: inline-block;
+      background: #f0eef5;
+      padding: 0.2rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-top: 0.8rem;
+      color: #c31432;
+    }
+
+    /* Lightbox overlay */
+    .lightbox {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.92);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+    }
+    .lightbox.active {
+      display: flex;
+    }
+    .lightbox-img {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      cursor: default;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: 25px;
+      right: 35px;
+      font-size: 2.5rem;
+      color: white;
+      background: rgba(0,0,0,0.6);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.2s;
+      z-index: 2001;
+    }
+    .lightbox-close:hover {
+      background: #c31432;
+    }
+
+    /* Modal styles (project detail view + more modal) */
+    .project-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.95);
+      z-index: 1000;
+      overflow-y: auto;
+      direction: ltr;
+    }
+    body.lang-fa .project-modal {
+      direction: rtl;
+    }
+    .modal-container {
+      max-width: 1300px;
+      margin: 2rem auto;
+      background: #fff;
+      border-radius: 32px;
+      padding: 2rem;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #c31432;
+      transition: 0.2s;
+      background: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .modal-close:hover {
+      background: #c31432;
+      color: white;
+    }
+    .modal-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      padding-right: 3rem;
+      color: #1a1a2e;
+    }
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .media-item {
+      background: #f8f7fc;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: 0.2s;
+    }
+    .media-item img, .media-item video {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .media-item img {
+      cursor: pointer;
+    }
+    .media-item p {
+      padding: 0.8rem;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #2d2f3b;
+      background: white;
+    }
+    .modal-back {
+      display: inline-block;
+      margin-top: 2rem;
+      padding: 0.5rem 1.2rem;
+      background: #1a1a2e;
+      color: white;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    /* More projects page is replaced by modal, but keep any style not used */
+    .more-projects-page {
+      display: none;
+    }
+
+    .knowledge-box {
+      margin-top: 1.8rem;
+      background: #fef1f2;
+      border-radius: 24px;
+      padding: 1.5rem;
+      border-right: 4px solid #c31432;
+    }
+    body.lang-fa .knowledge-box {
+      border-right: none;
+      border-left: 4px solid #c31432;
+    }
+    .knowledge-box h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    body.lang-fa .knowledge-box h4 {
+      flex-direction: row-reverse;
+    }
+
+    .contact {
+      padding: 4rem 0;
+      background: #1a1a2e;
+      color: white;
+      border-radius: 48px 48px 0 0;
+      margin-top: 2rem;
+    }
+    .contact .section-title {
+      color: white;
+    }
+    .contact .section-title:after {
+      background: #ff8a92;
+    }
+    .contact-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .contact-info {
+      flex: 1;
+    }
+    .contact-info p {
+      margin: 1rem 0 1.5rem;
+      opacity: 0.8;
+    }
+    .contact-details {
+      list-style: none;
+      margin-top: 1.5rem;
+    }
+    .contact-details li {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    body.lang-fa .contact-details li {
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+    .contact-details i {
+      width: 32px;
+      font-size: 1.3rem;
+      color: #ff8a92;
+    }
+    .contact-form {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 32px;
+      backdrop-filter: blur(2px);
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      border: none;
+      background: #ffffff20;
+      border-radius: 20px;
+      color: white;
+      font-family: inherit;
+      outline: none;
+      transition: 0.2s;
+    }
+    input:focus, textarea:focus {
+      background: #ffffff30;
+    }
+    input::placeholder, textarea::placeholder {
+      color: #ccccdd;
+    }
+    .contact-form button {
+      background: #c31432;
+      border: none;
+      width: 100%;
+      color: white;
+      font-weight: bold;
+    }
+    footer {
+      background: #1a1a2e;
+      text-align: center;
+      padding: 1.5rem;
+      color: #aaaac0;
+      font-size: 0.8rem;
+      border-top: 1px solid #2a2a40;
+    }
+    .guide-section {
+      background: #f9f7f3;
+      border-top: 2px solid #c31432;
+      padding: 2.5rem 1rem;
+      margin-top: 2rem;
+    }
+    body.lang-fa .guide-section {
+      direction: rtl;
+    }
+    .guide-container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .guide-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1a1a2e;
+      margin-bottom: 1rem;
+      border-right: 5px solid #c31432;
+      padding-right: 1rem;
+    }
+    body.lang-fa .guide-title {
+      border-right: none;
+      border-left: 5px solid #c31432;
+      padding-right: 0;
+      padding-left: 1rem;
+    }
+    .guide-content {
+      background: white;
+      border-radius: 28px;
+      padding: 1.8rem;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      line-height: 1.7;
+      color: #2c2c3a;
+    }
+    .guide-content h3 {
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+      color: #c31432;
+    }
+    .guide-content code {
+      background: #f0eef5;
+      padding: 0.2rem 0.5rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      direction: ltr;
+      display: inline-block;
+    }
+    .instruction-note {
+      background: #f0eef5;
+      border-radius: 28px;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: #2d2f3b;
+    }
+    @media (max-width: 800px) {
+      .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+      }
+      body.lang-fa .hero {
+        flex-direction: column-reverse;
+      }
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      .hero-stats {
+        justify-content: center;
+      }
+      .nav-inner {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .section-title:after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+      body.lang-fa .section-title:after {
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+      }
+      .section-title {
+        text-align: center;
+        display: block;
+      }
+      .about-grid {
+        flex-direction: column;
+      }
+      .contact-container {
+        flex-direction: column;
+      }
+      .lang-switch {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+      }
+      .guide-title {
+        font-size: 1.4rem;
+      }
+      .modal-container { margin: 1rem; padding: 1rem; }
+      .modal-title { font-size: 1.5rem; }
+      .media-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="container nav-inner">
+      <div class="logo" data-i18n="logo">ERFAN JAHANBAZI</div>
+      <ul class="nav-links">
+        <li><a href="#home" data-i18n="nav_home">Home</a></li>
+        <li><a href="#about" data-i18n="nav_about">About</a></li>
+        <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
+        <li><a href="#work" data-i18n="nav_work">Portfolio</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+      <div class="lang-switch">
+        <button class="lang-btn active" data-lang="en">EN</button>
+        <button class="lang-btn" data-lang="fa">FA</button>
+      </div>
+    </div>
+  </nav>
+
+  <main id="mainContent">
+    <section id="home" class="container hero">
+      <div class="hero-content">
+        <div class="hero-badge" data-i18n="hero_badge">🎬 Visual Storyteller</div>
+        <h1><span data-i18n="hero_name_intro">Hi, I'm</span> <span data-i18n="hero_name">Erfan Jahanbazi</span><br><span data-i18n="hero_title">Filmmaker & Editor</span></h1>
+        <p class="hero-desc" data-i18n="hero_desc">25 years old | Bachelor's degree holder. I craft cinematic narratives through photo/video editing, videography, and filmmaking. Every frame tells a story.</p>
+        <a href="#work" class="btn btn-primary" data-i18n="hero_btn">View portfolio <i class="fas fa-arrow-right"></i></a>
+        <div class="hero-stats">
+          <div class="stat"><span class="stat-number" data-count="4">4+</span><span class="stat-label" data-i18n="stat1_label">Years Experience</span></div>
+          <div class="stat"><span class="stat-number" data-count="50">50+</span><span class="stat-label" data-i18n="stat2_label">Projects Completed</span></div>
+          <div class="stat"><span class="stat-number" data-count="100">100%</span><span class="stat-label" data-i18n="stat3_label">Creativity</span></div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="avatar-placeholder"><img src="Avatar.jpg" alt="Erfan" style="width:100%; height:100%; object-fit:cover; border-radius:inherit;"></div>
+      </div>
+    </section>
+
+    <div class="container" id="about">
+      <div class="about">
+        <div class="about-grid">
+          <div class="about-text">
+            <h2 class="section-title" data-i18n="about_title">About me</h2>
+            <p data-i18n="about_p1">I'm Erfan Jahanbazi, 25 years old, a passionate visual artist holding a Bachelor's degree. Over the years, I've developed a strong command over the complete production pipeline — from pre-production planning to post-production magic.</p>
+            <p data-i18n="about_p2">My expertise spans across photo editing, video editing, professional videography, and indie filmmaking. I believe every image carries emotion and every edit builds a rhythm. I've collaborated with creative agencies, independent directors, and content creators to deliver compelling visual stories.</p>
+            <ul class="info-list">
+              <li><i class="fas fa-graduation-cap"></i> <span data-i18n="info_degree">Bachelor's degree</span></li>
+              <li><i class="fas fa-calendar-alt"></i> <span data-i18n="info_age">25 years old · Based in Isfahan</span></li>
+              <li><i class="fas fa-video"></i> <span data-i18n="info_video">Videography · Filmmaking expert</span></li>
+              <li><i class="fas fa-pen-fancy"></i> <span data-i18n="info_edit">Photo editing · Color grading · VFX</span></li>
+            </ul>
+            <div class="knowledge-box">
+              <h4><i class="fas fa-camera"></i> <span data-i18n="knowledge_title">Master of Photography Fundamentals</span></h4>
+              <p data-i18n="knowledge_text">I deeply understand the rule of thirds, leading lines, symmetry, and framing. My expertise in lighting (natural & artificial) allows me to sculpt mood and depth. I have a keen eye for positioning subjects, choosing angles, and composing both staged and candid shots. Whether using professional DSLR, mirrorless cameras, or mobile phones, I apply advanced techniques like exposure bracketing, focus stacking, and mobile manual controls to produce stunning visuals in any scenario.</p>
+            </div>
+          </div>
+          <div style="flex:1; background: #f3f0f9; border-radius: 32px; padding: 2rem; text-align: center;">
+            <i class="fas fa-film" style="font-size: 2.8rem; color:#c31432; margin-bottom: 1rem; display: inline-block;"></i>
+            <h3 style="margin-bottom: 0.5rem;" data-i18n="right_card_title">Cinematic approach</h3>
+            <p style="font-size: 0.9rem;" data-i18n="right_card_text">From documentary to narrative, I bring authentic storytelling through lenses & editing.</p>
+            <hr style="margin: 1.5rem 0; border-color: #e2dcec;">
+            <p><strong data-i18n="software_title">Software mastery:</strong><br> <span data-i18n="software_list">Premiere Pro · DaVinci Resolve · After Effects · Lightroom · Photoshop · Final Cut</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section id="skills" class="skills-section">
+      <div class="container">
+        <h2 class="section-title" data-i18n="skills_title">What I do</h2>
+        <div class="skills-grid">
+          <div class="skill-card"><i class="fas fa-video"></i><h3 data-i18n="skill_videography">Videography</h3><p data-i18n="skill_videography_desc">Cinematic videography for commercials, music videos, short films. On-set direction & camera operation with professional gear.</p></div>
+          <div class="skill-card"><i class="fas fa-cut"></i><h3 data-i18n="skill_videoedit">Video Editing</h3><p data-i18n="skill_videoedit_desc">Seamless editing, storytelling through rhythm, sound design, and color grading. DaVinci & Premiere expert.</p></div>
+          <div class="skill-card"><i class="fas fa-camera"></i><h3 data-i18n="skill_photoedit">Photo Editing</h3><p data-i18n="skill_photoedit_desc">Retouching, color correction, manipulation, and batch processing. Creating stunning visuals for brands & portraits.</p></div>
+          <div class="skill-card"><i class="fas fa-clapperboard"></i><h3 data-i18n="skill_filmmaking">Filmmaking</h3><p data-i18n="skill_filmmaking_desc">Full-cycle indie filmmaking: script, directing, cinematography & post-production. Award nominated shorts.</p></div>
+          <div class="skill-card"><i class="fas fa-mobile-alt"></i><h3 data-i18n="skill_photo">📸 Photography (Camera & Mobile)</h3><p data-i18n="skill_photo_desc">Expert in DSLR/Mirrorless and smartphone photography. Mastery of rule of thirds, lighting patterns, positioning, exposure control, and composition. I deliver high-end portraits, landscapes, and street photography with any device.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work" class="work container">
+      <h2 class="section-title" data-i18n="portfolio_title">Recent projects</h2>
+      <div class="gallery" id="projects-gallery"></div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <button id="moreProjectsBtn" class="btn btn-outline" data-i18n="more_btn" style="background: transparent; cursor: pointer;">More on request <i class="fas fa-chevron-right"></i></button>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container contact-container">
+        <div class="contact-info">
+          <h2 class="section-title" data-i18n="contact_title">Let's work together</h2>
+          <p data-i18n="contact_desc">I'm currently available for freelance projects, collaborations, or full-time opportunities.</p>
+          <ul class="contact-details">
+            <li><i class="fas fa-envelope"></i> <span data-i18n="contact_email">erfan.jr7@gmail.com</span></li>
+            <li><i class="fas fa-phone-alt"></i> <span data-i18n="contact_phone">+98 921 703 6278</span></li>
+            <li><i class="fab fa-instagram"></i> @j_erfan_j</li>
+            <li><i class="fab fa-linkedin"></i> <span data-i18n="contact_linkedin">Erfan Jahanbazi | Filmmaker</span></li>
+          </ul>
+        </div>
+        <div class="contact-form">
+          <h3 style="margin-bottom: 1.5rem; font-weight: 600;" data-i18n="form_title">Send a message</h3>
+          <form id="realContactForm">
+            <div class="form-group"><input type="text" id="userName" placeholder="Full name" data-i18n-placeholder="form_name" required></div>
+            <div class="form-group"><input type="email" id="userEmail" placeholder="Email address" data-i18n-placeholder="form_email" required></div>
+            <div class="form-group"><textarea id="userMessage" rows="3" placeholder="Tell me about your project..." data-i18n-placeholder="form_msg" required></textarea></div>
+            <button type="submit" id="sendBtn" class="btn btn-primary" style="background:#c31432; width:100%" data-i18n="form_send">Send inquiry <i class="fas fa-paper-plane"></i></button>
+            <p style="font-size: 0.7rem; margin-top: 12px; opacity: 0.6;" id="formStatus"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p data-i18n="footer_text">© 2026 Erfan Jahanbazi — Cinematic Portfolio. All works represented with passion for visual storytelling.</p>
+    </div>
+  </footer>
+
+  <!-- Modal used both for projects and "More on request" (like 35awards style, scrollable) -->
+  <div id="projectModal" class="project-modal">
+    <div class="modal-container">
+      <div class="modal-close" id="modalCloseBtn">&times;</div>
+      <h2 id="modalTitle" class="modal-title"></h2>
+      <div id="modalMediaGrid" class="media-grid"></div>
+      <button class="modal-back" id="modalBackBtn">← Back to Portfolio</button>
+    </div>
+  </div>
+
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-close" id="lightboxClose">×</div>
+    <img class="lightbox-img" id="lightboxImg" alt="">
+  </div>
+
+  <script>
+    // ======================== EMAILJS (placeholders) ========================
+    // ======================== EMAILJS (فعال شده) ========================
+(function(){ emailjs.init("IiMlk8cB8D2xSzpJG"); })(); // کلید عمومی واقعی
+
+async function sendEmail(event) {
+  event.preventDefault();
+  const btn = document.getElementById('sendBtn');
+  const statusDiv = document.getElementById('formStatus');
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+  
+  const from_name = document.getElementById('userName').value;
+  const from_email = document.getElementById('userEmail').value;
+  const message = document.getElementById('userMessage').value;
+  const templateParams = { from_name, from_email, message, to_email: 'erfan.jr7@gmail.com' };
+  
+  try {
+    const serviceID = "service_16fztgm";   // سرویس آیدی واقعی
+    const templateID = "template_svpib1j"; // تمپلیت آیدی واقعی
+    await emailjs.send(serviceID, templateID, templateParams);
+    const successMsg = document.body.classList.contains('lang-fa') ? "✅ پیام شما با موفقیت ارسال شد!" : "✅ Your message has been sent!";
+    statusDiv.innerHTML = successMsg;
+    document.getElementById('realContactForm').reset();
+  } catch (error) {
+    const errorMsg = document.body.classList.contains('lang-fa') ? "❌ خطا در ارسال پیام." : "❌ Failed to send.";
+    statusDiv.innerHTML = errorMsg;
+    console.error(error);
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+    setTimeout(() => statusDiv.innerHTML = '', 5000);
+  }
+}
+document.getElementById('realContactForm')?.addEventListener('submit', sendEmail);
+
+    // ======================== PROJECTS DATA ========================
+    const projectsData = {
+      After_Effects: { titleEn: "After Effects", titleFa: "افتر افکت", media: [{ type: "video", src: "After_1.mp4", caption: "Ringing Clock" },{ type: "video", src: "After_2.mp4", caption: "LARA LOGO" },{ type: "video", src: "After_3.mp4", caption: "ej LOGO" },{ type: "video", src: "After_4.mp4", caption: "Wine Glass" }] },
+      Premiere_Pro: { titleEn: "Premiere Pro", titleFa: "پریمیر پرو", media: [{ type: "video", src: "Video_1.mp4", caption: "Huawei Watch" },{ type: "video", src: "Video_2.mp4", caption: "Aquarium" },{ type: "video", src: "Video_3.mp4", caption: "Xbox One S" },{ type: "video", src: "Video_4.mp4", caption: "Gigabyte Aero15" }] },
+      thirtyfive_awards: { titleEn: "35awards", titleFa: "35awards", media: [{ type: "image", src: "Pitem_3.jpg", caption: "Top 1% Photographer" },{ type: "image", src: "Dip_6.jpg", caption: "Diploma - Symmetry" },{ type: "image", src: "Dip_5.jpg", caption: "Diploma - Best Phone Photo" },{ type: "image", src: "Dip_4.jpg", caption: "Diploma - Conseptual Minimalism" },{ type: "image", src: "Dip_3.jpg", caption: "Diploma - Number 35" },{ type: "image", src: "Dip_2.jpg", caption: "Diploma - CATS" },{ type: "image", src: "Dip_1_1.jpg", caption: "Diploma - Portrait" },{ type: "image", src: "Dip_7.jpg", caption: "Diploma - Reflection" }] },
+      Advertising_photography: { titleEn: "Advertising photography", titleFa: "عکاسی تبلیغاتی", media: [{ type: "image", src: "pro-1-2.jpg", caption: "AziCake: Yalda" },{ type: "image", src: "pro-2-2.webp", caption: "AziCake: Narges" },{ type: "image", src: "pro-3-3.webp", caption: "AziCake: Halloween" },{ type: "image", src: "pro-4-4.webp", caption: "AziCake: Cupcake" },{ type: "image", src: "pro-4-5.webp", caption: "AziCake: Cupcake" },{ type: "image", src: "pro-5-5.webp", caption: "AziCake: Wedding Anniversary" }] }
+    };
+    const galleryContainer = document.getElementById('projects-gallery');
+    galleryContainer.innerHTML = `
+      <div class="project-item" data-project="After_Effects"><div class="project-img"><img src="after_logo.jpg" alt="After Effects"></div><div class="project-info"><h3 data-i18n="proj1_title">After Effects</h3><p data-i18n="proj1_desc">Showreel & motion graphics.</p><span class="tag">Motion</span></div></div>
+      <div class="project-item" data-project="Premiere_Pro"><div class="project-img"><img src="Ppro_logo.jpg" alt="Premiere Pro"></div><div class="project-info"><h3 data-i18n="proj2_title">Premiere Pro</h3><p data-i18n="proj2_desc">Cinematic edits & color grading.</p><span class="tag">Editing</span></div></div>
+      <div class="project-item" data-project="thirtyfive_awards"><div class="project-img"><img src="Pitem_3.jpg" alt="35awards"></div><div class="project-info"><h3 data-i18n="proj3_title">35awards</h3><p data-i18n="proj3_desc">Award-winning photography.</p><span class="tag">Photography</span></div></div>
+      <div class="project-item" data-project="Advertising_photography"><div class="project-img"><img src="Add_logo.jpg" alt="Advertising"></div><div class="project-info"><h3 data-i18n="proj4_title">Advertising</h3><p data-i18n="proj4_desc">Commercial campaigns.</p><span class="tag">Commercial</span></div></div>
+    `;
+
+    // modal logic (standard + reusable for more)
+    const modal = document.getElementById('projectModal'), modalTitle = document.getElementById('modalTitle'), modalMediaGrid = document.getElementById('modalMediaGrid');
+    function closeModal() { modal.style.display = 'none'; document.body.style.overflow = ''; }
+    function openModalWithMedia(title, mediaItems) {
+      modalTitle.textContent = title;
+      let html = '';
+      mediaItems.forEach(item => {
+        if(item.type === 'image') html += `<div class="media-item"><img src="${item.src}" alt="${item.caption}" data-original="${item.src}"><p>${item.caption}</p></div>`;
+        else html += `<div class="media-item"><video controls preload="metadata"><source src="${item.src}" type="video/mp4"></video><p>${item.caption}</p></div>`;
+      });
+      modalMediaGrid.innerHTML = html;
+      modal.style.display = 'block';
+      document.body.style.overflow = 'hidden';
+      attachModalImageLightbox();
+    }
+    function openProjectModal(projectId) {
+      const data = projectsData[projectId];
+      if(!data) return;
+      const lang = document.body.classList.contains('lang-fa') ? 'fa' : 'en';
+      const title = lang === 'fa' ? data.titleFa : data.titleEn;
+      openModalWithMedia(title, data.media);
+    }
+    document.querySelectorAll('.project-item').forEach(el => {
+      el.addEventListener('click', (e) => { if(e.target.closest('.project-img img')) return; const pid = el.getAttribute('data-project'); if(pid) openProjectModal(pid); });
+    });
+    document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+    document.getElementById('modalBackBtn').addEventListener('click', closeModal);
+    window.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+
+    // Lightbox system
+    const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightboxImg'), lightboxClose = document.getElementById('lightboxClose');
+    function showLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
+    function closeLightbox() { lightbox.classList.remove('active'); lightboxImg.src = ''; }
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+    function attachImageLightbox(images) { images.forEach(img => { img.addEventListener('click', (e) => { e.stopPropagation(); showLightbox(img.src); }); }); }
+    function attachModalImageLightbox() { const modalImgs = document.querySelectorAll('#modalMediaGrid .media-item img'); attachImageLightbox(modalImgs); }
+    const initialImages = document.querySelectorAll('.project-img img');
+    attachImageLightbox(initialImages);
+    new MutationObserver(() => { attachModalImageLightbox(); }).observe(document.getElementById('modalMediaGrid'), { childList: true, subtree: true });
+    
+    // Build all media from all sections for "More on request"
+    let allMediaFromSections = [];
+    for (let projectKey in projectsData) {
+      const project = projectsData[projectKey];
+      if (project.media && Array.isArray(project.media)) {
+        project.media.forEach(item => {
+          allMediaFromSections.push({
+            type: item.type,
+            src: item.src,
+            caption: item.caption
+          });
+        });
+      }
+    }
+    let additionalMediaArray = [...allMediaFromSections];
+    // More on request: open modal exactly like 35awards style, scrollable, aggregated works
+    const moreBtn = document.getElementById('moreProjectsBtn');
+    function openMoreModal() {
+      const lang = document.body.classList.contains('lang-fa') ? 'fa' : 'en';
+      const title = lang === 'fa' ? "نمونه کار بیشتر (درخواستی)" : "More Creative Works";
+      openModalWithMedia(title, additionalMediaArray);
+    }
+    moreBtn.addEventListener('click', openMoreModal);
+    
+    // ======================== COUNTING NUMBERS ANIMATION ========================
+    function animateNumber(el) {
+      const raw = el.getAttribute('data-count');
+      if(!raw) return;
+      let target = parseInt(raw, 10);
+      if(isNaN(target)) target = 0;
+      let current = 0;
+      const step = Math.ceil(target / 30);
+      const interval = setInterval(() => {
+        current += step;
+        if(current >= target) { current = target; clearInterval(interval); }
+        let display = current;
+        if(el.innerText.includes('+')) display = current + '+';
+        else if(el.innerText.includes('%')) display = current + '%';
+        el.innerText = display;
+      }, 25);
+    }
+    const observerCount = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if(entry.isIntersecting) { animateNumber(entry.target); observerCount.unobserve(entry.target); } });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.stat-number').forEach(el => observerCount.observe(el));
+    
+    // ======================== TRANSLATIONS ========================
+    const translations = {
+      en: { logo: "ERFAN JAHANBAZI", nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_work: "Portfolio", nav_contact: "Contact", hero_badge: "🎬 Visual Storyteller", hero_name_intro: "Hi, I'm", hero_name: "Erfan Jahanbazi", hero_title: "Filmmaker & Editor", hero_desc: "25 years old | Bachelor's degree holder. I craft cinematic narratives through photo/video editing, videography, and filmmaking. Every frame tells a story.", hero_btn: "View portfolio", stat1_label: "Years Experience", stat2_label: "Projects Completed", stat3_label: "Creativity", about_title: "About me", about_p1: "I'm Erfan Jahanbazi, 25 years old, a passionate visual artist holding a Bachelor's degree. Over the years, I've developed a strong command over the complete production pipeline — from pre-production planning to post-production magic.", about_p2: "My expertise spans across photo editing, video editing, professional videography, and indie filmmaking. I believe every image carries emotion and every edit builds a rhythm. I've collaborated with creative agencies, independent directors, and content creators to deliver compelling visual stories.", info_degree: "Bachelor's degree", info_age: "25 years old · Based in Isfahan", info_video: "Videography · Filmmaking expert", info_edit: "Photo editing · Color grading · VFX", knowledge_title: "Master of Photography Fundamentals", knowledge_text: "I deeply understand the rule of thirds, leading lines, symmetry, and framing. My expertise in lighting (natural & artificial) allows me to sculpt mood and depth. I have a keen eye for positioning subjects, choosing angles, and composing both staged and candid shots. Whether using professional DSLR, mirrorless cameras, or mobile phones, I apply advanced techniques like exposure bracketing, focus stacking, and mobile manual controls to produce stunning visuals in any scenario.", right_card_title: "Cinematic approach", right_card_text: "From documentary to narrative, I bring authentic storytelling through lenses & editing.", software_title: "Software mastery:", software_list: "Premiere Pro · DaVinci Resolve · After Effects · Lightroom · Photoshop · Final Cut", skills_title: "What I do", skill_videography: "Videography", skill_videography_desc: "Cinematic videography for commercials, music videos, short films. On-set direction & camera operation with professional gear.", skill_videoedit: "Video Editing", skill_videoedit_desc: "Seamless editing, storytelling through rhythm, sound design, and color grading. DaVinci & Premiere expert.", skill_photoedit: "Photo Editing", skill_photoedit_desc: "Retouching, color correction, manipulation, and batch processing. Creating stunning visuals for brands & portraits.", skill_filmmaking: "Filmmaking", skill_filmmaking_desc: "Full-cycle indie filmmaking: script, directing, cinematography & post-production. Award nominated shorts.", skill_photo: "📸 Photography (Camera & Mobile)", skill_photo_desc: "Expert in DSLR/Mirrorless and smartphone photography. Mastery of rule of thirds, lighting patterns, positioning, exposure control, and composition. I deliver high-end portraits, landscapes, and street photography with any device.", portfolio_title: "Recent projects", proj1_title: "After Effects", proj1_desc: "Showreel & motion graphics.", proj2_title: "Premiere Pro", proj2_desc: "Cinematic edits & color grading.", proj3_title: "35awards", proj3_desc: "Award-winning photography.", proj4_title: "Advertising", proj4_desc: "Commercial campaigns.", more_btn: "More on request", contact_title: "Let's work together", contact_desc: "I'm currently available for freelance projects, collaborations, or full-time opportunities.", contact_email: "erfan.jr7@gmail.com", contact_phone: "+98 921 703 6278", contact_linkedin: "Erfan Jahanbazi | Filmmaker", form_title: "Send a message", form_name: "Full name", form_email: "Email address", form_msg: "Tell me about your project...", form_send: "Send inquiry", footer_text: "© 2026 Erfan Jahanbazi — Cinematic Portfolio." },
+      fa: { logo: "عرفان جهانبازی", nav_home: "خانه", nav_about: "درباره من", nav_skills: "مهارت‌ها", nav_work: "نمونه کار", nav_contact: "تماس", hero_badge: "🎬 قصه‌گوی تصویری", hero_name_intro: "سلام، من", hero_name: "عرفان جهانبازی", hero_title: "فیلمساز و تدوینگر", hero_desc: "۲۵ ساله | دارای مدرک کارشناسی. روایت‌های سینمایی را از طریق تدوین عکس و فیلم، فیلمبرداری و فیلمسازی خلق می‌کنم.", hero_btn: "مشاهده نمونه کارها", stat1_label: "سال تجربه", stat2_label: "پروژه انجام شده", stat3_label: "خلاقیت", about_title: "درباره من", about_p1: "من عرفان جهانبازی، ۲۵ ساله، هنرمند تصویری هستم که مدرک کارشناسی دارم. در طول سال‌ها تسلط کاملی بر فرآیند تولید پیدا کرده‌ام.", about_p2: "تخصص من شامل ویرایش عکس، ویرایش ویدیو، فیلمبرداری حرفه‌ای و فیلمسازی مستقل است.", info_degree: "مدرک کارشناسی", info_age: "۲۵ سال · مستقر در اصفهان", info_video: "فیلمبرداری · کارشناس فیلمسازی", info_edit: "ویرایش عکس · درجه‌بندی رنگ · افکت‌های ویژه", knowledge_title: "استاد اصول عکاسی", knowledge_text: "قانون یک‌سوم، خطوط راهنما، تقارن و کادربندی را عمیقاً درک می‌کنم.", right_card_title: "رویکرد سینمایی", right_card_text: "از مستند تا روایت داستانی، داستان‌گویی اصیل را از طریق لنز و تدوین به ارمغان می‌آورم.", software_title: "تسلط نرم‌افزاری:", software_list: "پریمیر پرو · داوینچی ریزالو · افتر افکت · لایت‌روم · فتوشاپ · فاینال کات", skills_title: "خدمات من", skill_videography: "فیلمبرداری", skill_videography_desc: "فیلمبرداری سینمایی برای تبلیغات، موزیک ویدیو، فیلم کوتاه.", skill_videoedit: "تدوین ویدیو", skill_videoedit_desc: "تدوین بی‌نقص، روایت از طریق ریتم، طراحی صدا و درجه‌بندی رنگ.", skill_photoedit: "ویرایش عکس", skill_photoedit_desc: "روتوش، تصحیح رنگ، دستکاری و پردازش دسته‌جمعی.", skill_filmmaking: "فیلمسازی", skill_filmmaking_desc: "فیلمسازی کامل: فیلمنامه، کارگردانی، فیلمبرداری و پس‌تولید.", skill_photo: "📸 عکاسی (دوربین و موبایل)", skill_photo_desc: "متخصص عکاسی با دوربین DSLR/بدون آینه و موبایل.", portfolio_title: "پروژه‌های اخیر", proj1_title: "افتر افکت", proj1_desc: "موشن گرافیک و ریل.", proj2_title: "پریمیر پرو", proj2_desc: "تدوین و درجه‌بندی سینمایی.", proj3_title: "35awards", proj3_desc: "عکاسی برنده جایزه.", proj4_title: "تبلیغاتی", proj4_desc: "کمپین‌های تجاری.", more_btn: "بیشتر در صورت درخواست", contact_title: "بیا با هم کار کنیم", contact_desc: "در حال حاضر برای پروژه‌های فریلنسری، همکاری یا فرصت تمام وقت در دسترس هستم.", contact_email: "erfan.jr7@gmail.com", contact_phone: "+98 921 703 6278", contact_linkedin: "عرفان جهانبازی | فیلمساز", form_title: "ارسال پیام", form_name: "نام کامل", form_email: "آدرس ایمیل", form_msg: "درباره پروژه خود بگویید...", form_send: "ارسال درخواست", footer_text: "© ۲۰۲۶ عرفان جهانبازی — نمونه کار سینمایی." }
+    };
+    let currentLang = 'en';
+    function updateLanguage(lang) {
+      currentLang = lang;
+      document.querySelectorAll('[data-i18n]').forEach(el => { const key = el.getAttribute('data-i18n'); if(translations[lang][key]) el.innerHTML = translations[lang][key]; });
+      document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { const key = el.getAttribute('data-i18n-placeholder'); if(translations[lang][key]) el.placeholder = translations[lang][key]; });
+      document.body.classList.toggle('lang-fa', lang === 'fa');
+      document.querySelectorAll('.lang-btn').forEach(btn => { if(btn.getAttribute('data-lang') === lang) btn.classList.add('active'); else btn.classList.remove('active'); });
+    }
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.addEventListener('click', () => updateLanguage(btn.getAttribute('data-lang'))));
+    updateLanguage('en');
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => anchor.addEventListener('click', function(e) { const target = document.querySelector(this.getAttribute('href')); if(target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); } }));
+  </script>
+</body>
+</html>
