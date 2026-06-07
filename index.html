@@ -4,8 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Erfan Jahanbazi | Portfolio (EN/FA - Real Form + Video Guide)</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- No external fonts - using custom Peyda font -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -16,8 +15,18 @@
       box-sizing: border-box;
     }
 
+    /* Load custom Peyda font */
+    @font-face {
+      font-family: 'Peyda';
+      src: url('Peyda-Regular.ttf') format('truetype');
+      font-weight: 500;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* Main font stack: Peyda first, then reliable system fallbacks */
     body {
-      font-family: 'Inter', 'Vazirmatn', sans-serif;
+      font-family: 'Peyda', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background-color: #fcfcfc;
       color: #1a1a2e;
       line-height: 1.5;
@@ -30,11 +39,11 @@
       text-align: left;
     }
 
-    /* RTL overrides for Persian */
+    /* RTL overrides for Persian - same Peyda font (supports Persian script) */
     body.lang-fa {
       direction: rtl;
       text-align: right;
-      font-family: 'Vazirmatn', 'Inter', sans-serif;
+      font-family: 'Peyda', 'IRANSansX', 'IRANSans', 'Tahoma', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       letter-spacing: 0;
     }
     body.lang-fa p, 
@@ -463,7 +472,7 @@
       background: #c31432;
     }
 
-    /* Modal styles (project detail view + more modal) */
+    /* Modal styles (project detail view + more modal) - updated for vertical videos */
     .project-modal {
       display: none;
       position: fixed;
@@ -526,15 +535,24 @@
       overflow: hidden;
       box-shadow: 0 4px 12px rgba(0,0,0,0.05);
       transition: 0.2s;
+      display: flex;
+      flex-direction: column;
     }
-    .media-item img, .media-item video {
+    .media-item img {
       width: 100%;
       height: 200px;
       object-fit: cover;
       display: block;
-    }
-    .media-item img {
       cursor: pointer;
+    }
+    /* Video styling: respect original aspect ratio (vertical videos will be tall) */
+    .media-item video {
+      width: 100%;
+      height: auto;
+      max-height: 450px;
+      object-fit: contain;
+      background: #000;
+      display: block;
     }
     .media-item p {
       padding: 0.8rem;
@@ -627,6 +645,14 @@
     .contact-details i {
       width: 32px;
       font-size: 1.3rem;
+      color: #ff8a92;
+    }
+    .contact-details a {
+      color: white;
+      text-decoration: none;
+      transition: 0.2s;
+    }
+    .contact-details a:hover {
       color: #ff8a92;
     }
     .contact-form {
@@ -774,6 +800,9 @@
       .modal-container { margin: 1rem; padding: 1rem; }
       .modal-title { font-size: 1.5rem; }
       .media-grid { grid-template-columns: 1fr; }
+      .media-item video {
+        max-height: 400px;
+      }
     }
   </style>
 </head>
@@ -859,6 +888,7 @@
       <h2 class="section-title" data-i18n="portfolio_title">Recent projects</h2>
       <div class="gallery" id="projects-gallery"></div>
       <div style="text-align: center; margin-top: 2rem;">
+        <!-- More on request button now opens Instagram link -->
         <button id="moreProjectsBtn" class="btn btn-outline" data-i18n="more_btn" style="background: transparent; cursor: pointer;">More on request <i class="fas fa-chevron-right"></i></button>
       </div>
     </section>
@@ -871,8 +901,7 @@
           <ul class="contact-details">
             <li><i class="fas fa-envelope"></i> <span data-i18n="contact_email">erfan.jr7@gmail.com</span></li>
             <li><i class="fas fa-phone-alt"></i> <span data-i18n="contact_phone">+98 921 703 6278</span></li>
-            <li><i class="fab fa-instagram"></i> @j_erfan_j</li>
-            <li><i class="fab fa-linkedin"></i> <span data-i18n="contact_linkedin">Erfan Jahanbazi | Filmmaker</span></li>
+            <li><i class="fab fa-instagram"></i> <a href="https://www.instagram.com/j_erfan_j?utm_source=qr&igsh=Yzh6ejB6eXRmbHll" target="_blank" rel="noopener noreferrer">@j_erfan_j</a></li>
           </ul>
         </div>
         <div class="contact-form">
@@ -895,7 +924,7 @@
     </div>
   </footer>
 
-  <!-- Modal used both for projects and "More on request" (like 35awards style, scrollable) -->
+  <!-- Modal used both for projects (still works for individual project clicks) -->
   <div id="projectModal" class="project-modal">
     <div class="modal-container">
       <div class="modal-close" id="modalCloseBtn">&times;</div>
@@ -911,58 +940,112 @@
   </div>
 
   <script>
-    // ======================== EMAILJS (placeholders) ========================
     // ======================== EMAILJS (فعال شده) ========================
-(function(){ emailjs.init("IiMlk8cB8D2xSzpJG"); })(); // کلید عمومی واقعی
+    (function(){ emailjs.init("IiMlk8cB8D2xSzpJG"); })();
 
-async function sendEmail(event) {
-  event.preventDefault();
-  const btn = document.getElementById('sendBtn');
-  const statusDiv = document.getElementById('formStatus');
-  const originalText = btn.innerHTML;
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-  
-  const from_name = document.getElementById('userName').value;
-  const from_email = document.getElementById('userEmail').value;
-  const message = document.getElementById('userMessage').value;
-  const templateParams = { from_name, from_email, message, to_email: 'erfan.jr7@gmail.com' };
-  
-  try {
-    const serviceID = "service_16fztgm";   // سرویس آیدی واقعی
-    const templateID = "template_svpib1j"; // تمپلیت آیدی واقعی
-    await emailjs.send(serviceID, templateID, templateParams);
-    const successMsg = document.body.classList.contains('lang-fa') ? "✅ پیام شما با موفقیت ارسال شد!" : "✅ Your message has been sent!";
-    statusDiv.innerHTML = successMsg;
-    document.getElementById('realContactForm').reset();
-  } catch (error) {
-    const errorMsg = document.body.classList.contains('lang-fa') ? "❌ خطا در ارسال پیام." : "❌ Failed to send.";
-    statusDiv.innerHTML = errorMsg;
-    console.error(error);
-  } finally {
-    btn.disabled = false;
-    btn.innerHTML = originalText;
-    setTimeout(() => statusDiv.innerHTML = '', 5000);
-  }
-}
-document.getElementById('realContactForm')?.addEventListener('submit', sendEmail);
+    async function sendEmail(event) {
+      event.preventDefault();
+      const btn = document.getElementById('sendBtn');
+      const statusDiv = document.getElementById('formStatus');
+      const originalText = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+      
+      const from_name = document.getElementById('userName').value;
+      const from_email = document.getElementById('userEmail').value;
+      const message = document.getElementById('userMessage').value;
+      const templateParams = { from_name, from_email, message, to_email: 'erfan.jr7@gmail.com' };
+      
+      try {
+        const serviceID = "service_16fztgm";
+        const templateID = "template_svpib1j";
+        await emailjs.send(serviceID, templateID, templateParams);
+        const successMsg = document.body.classList.contains('lang-fa') ? "✅ پیام شما با موفقیت ارسال شد!" : "✅ Your message has been sent!";
+        statusDiv.innerHTML = successMsg;
+        document.getElementById('realContactForm').reset();
+      } catch (error) {
+        const errorMsg = document.body.classList.contains('lang-fa') ? "❌ خطا در ارسال پیام." : "❌ Failed to send.";
+        statusDiv.innerHTML = errorMsg;
+        console.error(error);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        setTimeout(() => statusDiv.innerHTML = '', 5000);
+      }
+    }
+    document.getElementById('realContactForm')?.addEventListener('submit', sendEmail);
 
     // ======================== PROJECTS DATA ========================
     const projectsData = {
-      After_Effects: { titleEn: "After Effects", titleFa: "افتر افکت", media: [{ type: "video", src: "After_1.mp4", caption: "Ringing Clock" },{ type: "video", src: "After_2.mp4", caption: "LARA LOGO" },{ type: "video", src: "After_3.mp4", caption: "ej LOGO" },{ type: "video", src: "After_4.mp4", caption: "Wine Glass" }] },
-      Premiere_Pro: { titleEn: "Premiere Pro", titleFa: "پریمیر پرو", media: [{ type: "video", src: "Video_1.mp4", caption: "Huawei Watch" },{ type: "video", src: "Video_2.mp4", caption: "Aquarium" },{ type: "video", src: "Video_3.mp4", caption: "Xbox One S" },{ type: "video", src: "Video_4.mp4", caption: "Gigabyte Aero15" }] },
-      thirtyfive_awards: { titleEn: "35awards", titleFa: "35awards", media: [{ type: "image", src: "Pitem_3.jpg", caption: "Top 1% Photographer" },{ type: "image", src: "dip_6.jpg", caption: "Diploma - Symmetry" },{ type: "image", src: "dip_5.jpg", caption: "Diploma - Best Phone Photo" },{ type: "image", src: "dip_4.jpg", caption: "Diploma - Conseptual Minimalism" },{ type: "image", src: "dip_3.jpg", caption: "Diploma - Number 35" },{ type: "image", src: "dip_2.jpg", caption: "Diploma - CATS" },{ type: "image", src: "dip_1.jpg", caption: "Diploma - Portrait" },{ type: "image", src: "dip_7.jpg", caption: "Diploma - Reflection" }] },
-      Advertising_photography: { titleEn: "Advertising photography", titleFa: "عکاسی تبلیغاتی", media: [{ type: "image", src: "pro-1-2.jpg", caption: "AziCake: Yalda" },{ type: "image", src: "pro-2-2.webp", caption: "AziCake: Narges" },{ type: "image", src: "pro-3-3.webp", caption: "AziCake: Halloween" },{ type: "image", src: "pro-4-4.webp", caption: "AziCake: Cupcake" },{ type: "image", src: "pro-4-5.webp", caption: "AziCake: Cupcake" },{ type: "image", src: "pro-5-5.webp", caption: "AziCake: Wedding Anniversary" }] }
+      After_Effects: { 
+        titleEn: "After Effects", 
+        titleFa: "افتر افکت", 
+        media: [ 
+          { type: "video", src: "After_1.mp4", caption: "Ringing Clock" },
+          { type: "video", src: "After_2.mp4", caption: "LARA LOGO" },
+          { type: "video", src: "After_3.mp4", caption: "ej LOGO" },
+          { type: "video", src: "After_4.mp4", caption: "Wine Glass" },
+          { type: "video", src: "Video_8.mp4", caption: "Lego Motion" },
+          { type: "video", src: "Video_9.mp4", caption: "Batman Lego Motion" },
+          { type: "video", src: "After_5.mp4", caption: "MELODY CAFE" }
+        ] 
+      },
+      Premiere_Pro: { 
+        titleEn: "Premiere Pro", 
+        titleFa: "پریمیر پرو", 
+        media: [ 
+          { type: "video", src: "Video_1.mp4", caption: "Huawei Watch" },
+          { type: "video", src: "Video_10.mp4", caption: "Sigar" },
+          { type: "video", src: "Video_3.mp4", caption: "Xbox One S" },
+          { type: "video", src: "Video_6.mp4", caption: "Gym" },
+          { type: "video", src: "Video_2.mp4", caption: "Aquarium" },
+          { type: "video", src: "Video_7.mp4", caption: "Me" },
+          { type: "video", src: "Video_15.mp4", caption: "Perspolis" },
+          { type: "video", src: "Video_12.mp4", caption: "The Musician" },
+          { type: "video", src: "Video_13.mp4", caption: "Naghsh Jahan" },
+          { type: "video", src: "Video_14.mp4", caption: "Phone Vs Camera" },
+          { type: "video", src: "Video_16.mp4", caption: "ZayandeRod" },
+          { type: "video", src: "Video_17.mp4", caption: "AziCake" }
+        ] 
+      },
+      thirtyfive_awards: { 
+        titleEn: "35awards", 
+        titleFa: "35awards", 
+        media: [ 
+          { type: "image", src: "Pitem_3.jpg", caption: "Top 1% Photographer" },
+          { type: "image", src: "Dip_6.jpg", caption: "Diploma - Symmetry" },
+          { type: "image", src: "Dip_5.jpg", caption: "Diploma - Best Phone Photo" },
+          { type: "image", src: "Dip_4.jpg", caption: "Diploma - Conseptual Minimalism" },
+          { type: "image", src: "Dip_3.jpg", caption: "Diploma - Number 35" },
+          { type: "image", src: "Dip_2.jpg", caption: "Diploma - CATS" },
+          { type: "image", src: "Dip_1.jpg", caption: "Diploma - Portrait" },
+          { type: "image", src: "Dip_7.jpg", caption: "Diploma - Reflection" }
+        ] 
+      },
+      Advertising_photography: { 
+        titleEn: "Advertising photography", 
+        titleFa: "عکاسی تبلیغاتی", 
+        media: [ 
+          { type: "image", src: "pro-1-2.jpg", caption: "AziCake: Yalda" },
+          { type: "image", src: "pro-2-2.webp", caption: "AziCake: Narges" },
+          { type: "image", src: "pro-3-3.webp", caption: "AziCake: Halloween" },
+          { type: "image", src: "pro-4-4.webp", caption: "AziCake: Cupcake" },
+          { type: "image", src: "pro-4-5.webp", caption: "AziCake: Cupcake" },
+          { type: "image", src: "pro-5-5.webp", caption: "AziCake: Wedding Anniversary" },
+          { type: "image", src: "pro-6-6.jpg", caption: "Huawei Watch" },
+          { type: "image", src: "pro-7-7.jpg", caption: "AziCake: Xbox One S" }
+        ] 
+      }
     };
     const galleryContainer = document.getElementById('projects-gallery');
     galleryContainer.innerHTML = `
-      <div class="project-item" data-project="After_Effects"><div class="project-img"><img src="after_logo.jpg" alt="After Effects"></div><div class="project-info"><h3 data-i18n="proj1_title">After Effects</h3><p data-i18n="proj1_desc">Showreel & motion graphics.</p><span class="tag">Motion</span></div></div>
-      <div class="project-item" data-project="Premiere_Pro"><div class="project-img"><img src="Ppro_logo.jpg" alt="Premiere Pro"></div><div class="project-info"><h3 data-i18n="proj2_title">Premiere Pro</h3><p data-i18n="proj2_desc">Cinematic edits & color grading.</p><span class="tag">Editing</span></div></div>
+      <div class="project-item" data-project="After_Effects"><div class="project-img"><img src="after_logo.jpg" alt="After Effects"></div><div class="project-info"><h3 data-i18n="proj1_title">After Effects</h3><p data-i18n="proj1_desc">Showreel & motion graphics + vertical videos.</p><span class="tag">Motion</span></div></div>
+      <div class="project-item" data-project="Premiere_Pro"><div class="project-img"><img src="Ppro_logo.jpg" alt="Premiere Pro"></div><div class="project-info"><h3 data-i18n="proj2_title">Premiere Pro</h3><p data-i18n="proj2_desc">Cinematic edits & color grading + vertical edits.</p><span class="tag">Editing</span></div></div>
       <div class="project-item" data-project="thirtyfive_awards"><div class="project-img"><img src="Pitem_3.jpg" alt="35awards"></div><div class="project-info"><h3 data-i18n="proj3_title">35awards</h3><p data-i18n="proj3_desc">Award-winning photography.</p><span class="tag">Photography</span></div></div>
       <div class="project-item" data-project="Advertising_photography"><div class="project-img"><img src="Add_logo.jpg" alt="Advertising"></div><div class="project-info"><h3 data-i18n="proj4_title">Advertising</h3><p data-i18n="proj4_desc">Commercial campaigns.</p><span class="tag">Commercial</span></div></div>
     `;
 
-    // modal logic (standard + reusable for more)
+    // modal logic (still works for individual project items)
     const modal = document.getElementById('projectModal'), modalTitle = document.getElementById('modalTitle'), modalMediaGrid = document.getElementById('modalMediaGrid');
     function closeModal() { modal.style.display = 'none'; document.body.style.overflow = ''; }
     function openModalWithMedia(title, mediaItems) {
@@ -1003,29 +1086,12 @@ document.getElementById('realContactForm')?.addEventListener('submit', sendEmail
     attachImageLightbox(initialImages);
     new MutationObserver(() => { attachModalImageLightbox(); }).observe(document.getElementById('modalMediaGrid'), { childList: true, subtree: true });
     
-    // Build all media from all sections for "More on request"
-    let allMediaFromSections = [];
-    for (let projectKey in projectsData) {
-      const project = projectsData[projectKey];
-      if (project.media && Array.isArray(project.media)) {
-        project.media.forEach(item => {
-          allMediaFromSections.push({
-            type: item.type,
-            src: item.src,
-            caption: item.caption
-          });
-        });
-      }
-    }
-    let additionalMediaArray = [...allMediaFromSections];
-    // More on request: open modal exactly like 35awards style, scrollable, aggregated works
+    // ======================== "MORE ON REQUEST" BUTTON -> OPEN INSTAGRAM ========================
     const moreBtn = document.getElementById('moreProjectsBtn');
-    function openMoreModal() {
-      const lang = document.body.classList.contains('lang-fa') ? 'fa' : 'en';
-      const title = lang === 'fa' ? "نمونه کار بیشتر (درخواستی)" : "More Creative Works";
-      openModalWithMedia(title, additionalMediaArray);
-    }
-    moreBtn.addEventListener('click', openMoreModal);
+    const instagramUrl = "https://www.instagram.com/j_erfan_j?utm_source=qr&igsh=Yzh6ejB6eXRmbHll";
+    moreBtn.addEventListener('click', () => {
+      window.open(instagramUrl, '_blank');
+    });
     
     // ======================== COUNTING NUMBERS ANIMATION ========================
     function animateNumber(el) {
@@ -1051,8 +1117,8 @@ document.getElementById('realContactForm')?.addEventListener('submit', sendEmail
     
     // ======================== TRANSLATIONS ========================
     const translations = {
-      en: { logo: "ERFAN JAHANBAZI", nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_work: "Portfolio", nav_contact: "Contact", hero_badge: "🎬 Visual Storyteller", hero_name_intro: "Hi, I'm", hero_name: "Erfan Jahanbazi", hero_title: "Filmmaker & Editor", hero_desc: "25 years old | Bachelor's degree holder. I craft cinematic narratives through photo/video editing, videography, and filmmaking. Every frame tells a story.", hero_btn: "View portfolio", stat1_label: "Years Experience", stat2_label: "Projects Completed", stat3_label: "Creativity", about_title: "About me", about_p1: "I'm Erfan Jahanbazi, 25 years old, a passionate visual artist holding a Bachelor's degree. Over the years, I've developed a strong command over the complete production pipeline — from pre-production planning to post-production magic.", about_p2: "My expertise spans across photo editing, video editing, professional videography, and indie filmmaking. I believe every image carries emotion and every edit builds a rhythm. I've collaborated with creative agencies, independent directors, and content creators to deliver compelling visual stories.", info_degree: "Bachelor's degree", info_age: "25 years old · Based in Isfahan", info_video: "Videography · Filmmaking expert", info_edit: "Photo editing · Color grading · VFX", knowledge_title: "Master of Photography Fundamentals", knowledge_text: "I deeply understand the rule of thirds, leading lines, symmetry, and framing. My expertise in lighting (natural & artificial) allows me to sculpt mood and depth. I have a keen eye for positioning subjects, choosing angles, and composing both staged and candid shots. Whether using professional DSLR, mirrorless cameras, or mobile phones, I apply advanced techniques like exposure bracketing, focus stacking, and mobile manual controls to produce stunning visuals in any scenario.", right_card_title: "Cinematic approach", right_card_text: "From documentary to narrative, I bring authentic storytelling through lenses & editing.", software_title: "Software mastery:", software_list: "Premiere Pro · DaVinci Resolve · After Effects · Lightroom · Photoshop · Final Cut", skills_title: "What I do", skill_videography: "Videography", skill_videography_desc: "Cinematic videography for commercials, music videos, short films. On-set direction & camera operation with professional gear.", skill_videoedit: "Video Editing", skill_videoedit_desc: "Seamless editing, storytelling through rhythm, sound design, and color grading. DaVinci & Premiere expert.", skill_photoedit: "Photo Editing", skill_photoedit_desc: "Retouching, color correction, manipulation, and batch processing. Creating stunning visuals for brands & portraits.", skill_filmmaking: "Filmmaking", skill_filmmaking_desc: "Full-cycle indie filmmaking: script, directing, cinematography & post-production. Award nominated shorts.", skill_photo: "📸 Photography (Camera & Mobile)", skill_photo_desc: "Expert in DSLR/Mirrorless and smartphone photography. Mastery of rule of thirds, lighting patterns, positioning, exposure control, and composition. I deliver high-end portraits, landscapes, and street photography with any device.", portfolio_title: "Recent projects", proj1_title: "After Effects", proj1_desc: "Showreel & motion graphics.", proj2_title: "Premiere Pro", proj2_desc: "Cinematic edits & color grading.", proj3_title: "35awards", proj3_desc: "Award-winning photography.", proj4_title: "Advertising", proj4_desc: "Commercial campaigns.", more_btn: "More on request", contact_title: "Let's work together", contact_desc: "I'm currently available for freelance projects, collaborations, or full-time opportunities.", contact_email: "erfan.jr7@gmail.com", contact_phone: "+98 921 703 6278", contact_linkedin: "Erfan Jahanbazi | Filmmaker", form_title: "Send a message", form_name: "Full name", form_email: "Email address", form_msg: "Tell me about your project...", form_send: "Send inquiry", footer_text: "© 2026 Erfan Jahanbazi — Cinematic Portfolio." },
-      fa: { logo: "عرفان جهانبازی", nav_home: "خانه", nav_about: "درباره من", nav_skills: "مهارت‌ها", nav_work: "نمونه کار", nav_contact: "تماس", hero_badge: "🎬 قصه‌گوی تصویری", hero_name_intro: "سلام، من", hero_name: "عرفان جهانبازی", hero_title: "فیلمساز و تدوینگر", hero_desc: "۲۵ ساله | دارای مدرک کارشناسی. روایت‌های سینمایی را از طریق تدوین عکس و فیلم، فیلمبرداری و فیلمسازی خلق می‌کنم.", hero_btn: "مشاهده نمونه کارها", stat1_label: "سال تجربه", stat2_label: "پروژه انجام شده", stat3_label: "خلاقیت", about_title: "درباره من", about_p1: "من عرفان جهانبازی، ۲۵ ساله، هنرمند تصویری هستم که مدرک کارشناسی دارم. در طول سال‌ها تسلط کاملی بر فرآیند تولید پیدا کرده‌ام.", about_p2: "تخصص من شامل ویرایش عکس، ویرایش ویدیو، فیلمبرداری حرفه‌ای و فیلمسازی مستقل است.", info_degree: "مدرک کارشناسی", info_age: "۲۵ سال · مستقر در اصفهان", info_video: "فیلمبرداری · کارشناس فیلمسازی", info_edit: "ویرایش عکس · درجه‌بندی رنگ · افکت‌های ویژه", knowledge_title: "استاد اصول عکاسی", knowledge_text: "قانون یک‌سوم، خطوط راهنما، تقارن و کادربندی را عمیقاً درک می‌کنم.", right_card_title: "رویکرد سینمایی", right_card_text: "از مستند تا روایت داستانی، داستان‌گویی اصیل را از طریق لنز و تدوین به ارمغان می‌آورم.", software_title: "تسلط نرم‌افزاری:", software_list: "پریمیر پرو · داوینچی ریزالو · افتر افکت · لایت‌روم · فتوشاپ · فاینال کات", skills_title: "خدمات من", skill_videography: "فیلمبرداری", skill_videography_desc: "فیلمبرداری سینمایی برای تبلیغات، موزیک ویدیو، فیلم کوتاه.", skill_videoedit: "تدوین ویدیو", skill_videoedit_desc: "تدوین بی‌نقص، روایت از طریق ریتم، طراحی صدا و درجه‌بندی رنگ.", skill_photoedit: "ویرایش عکس", skill_photoedit_desc: "روتوش، تصحیح رنگ، دستکاری و پردازش دسته‌جمعی.", skill_filmmaking: "فیلمسازی", skill_filmmaking_desc: "فیلمسازی کامل: فیلمنامه، کارگردانی، فیلمبرداری و پس‌تولید.", skill_photo: "📸 عکاسی (دوربین و موبایل)", skill_photo_desc: "متخصص عکاسی با دوربین DSLR/بدون آینه و موبایل.", portfolio_title: "پروژه‌های اخیر", proj1_title: "افتر افکت", proj1_desc: "موشن گرافیک و ریل.", proj2_title: "پریمیر پرو", proj2_desc: "تدوین و درجه‌بندی سینمایی.", proj3_title: "35awards", proj3_desc: "عکاسی برنده جایزه.", proj4_title: "تبلیغاتی", proj4_desc: "کمپین‌های تجاری.", more_btn: "بیشتر در صورت درخواست", contact_title: "بیا با هم کار کنیم", contact_desc: "در حال حاضر برای پروژه‌های فریلنسری، همکاری یا فرصت تمام وقت در دسترس هستم.", contact_email: "erfan.jr7@gmail.com", contact_phone: "+98 921 703 6278", contact_linkedin: "عرفان جهانبازی | فیلمساز", form_title: "ارسال پیام", form_name: "نام کامل", form_email: "آدرس ایمیل", form_msg: "درباره پروژه خود بگویید...", form_send: "ارسال درخواست", footer_text: "© ۲۰۲۶ عرفان جهانبازی — نمونه کار سینمایی." }
+      en: { logo: "ERFAN JAHANBAZI", nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_work: "Portfolio", nav_contact: "Contact", hero_badge: "🎬 Visual Storyteller", hero_name_intro: "Hi, I'm", hero_name: "Erfan Jahanbazi", hero_title: "Filmmaker & Editor", hero_desc: "25 years old | Bachelor's degree holder. I craft cinematic narratives through photo/video editing, videography, and filmmaking. Every frame tells a story.", hero_btn: "View portfolio", stat1_label: "Years Experience", stat2_label: "Projects Completed", stat3_label: "Creativity", about_title: "About me", about_p1: "I'm Erfan Jahanbazi, 25 years old, a passionate visual artist holding a Bachelor's degree. Over the years, I've developed a strong command over the complete production pipeline — from pre-production planning to post-production magic.", about_p2: "My expertise spans across photo editing, video editing, professional videography, and indie filmmaking. I believe every image carries emotion and every edit builds a rhythm. I've collaborated with creative agencies, independent directors, and content creators to deliver compelling visual stories.", info_degree: "Bachelor's degree", info_age: "25 years old · Based in Isfahan", info_video: "Videography · Filmmaking expert", info_edit: "Photo editing · Color grading · VFX", knowledge_title: "Master of Photography Fundamentals", knowledge_text: "I deeply understand the rule of thirds, leading lines, symmetry, and framing. My expertise in lighting (natural & artificial) allows me to sculpt mood and depth. I have a keen eye for positioning subjects, choosing angles, and composing both staged and candid shots. Whether using professional DSLR, mirrorless cameras, or mobile phones, I apply advanced techniques like exposure bracketing, focus stacking, and mobile manual controls to produce stunning visuals in any scenario.", right_card_title: "Cinematic approach", right_card_text: "From documentary to narrative, I bring authentic storytelling through lenses & editing.", software_title: "Software mastery:", software_list: "Premiere Pro · DaVinci Resolve · After Effects · Lightroom · Photoshop · Final Cut", skills_title: "What I do", skill_videography: "Videography", skill_videography_desc: "Cinematic videography for commercials, music videos, short films. On-set direction & camera operation with professional gear.", skill_videoedit: "Video Editing", skill_videoedit_desc: "Seamless editing, storytelling through rhythm, sound design, and color grading. DaVinci & Premiere expert.", skill_photoedit: "Photo Editing", skill_photoedit_desc: "Retouching, color correction, manipulation, and batch processing. Creating stunning visuals for brands & portraits.", skill_filmmaking: "Filmmaking", skill_filmmaking_desc: "Full-cycle indie filmmaking: script, directing, cinematography & post-production.", skill_photo: "📸 Photography (Camera & Mobile)", skill_photo_desc: "Expert in DSLR/Mirrorless and smartphone photography. Mastery of rule of thirds, lighting patterns, positioning, exposure control, and composition. I deliver high-end portraits, landscapes, and street photography with any device.", portfolio_title: "Recent projects", proj1_title: "After Effects", proj1_desc: "Showreel & motion graphics + vertical videos.", proj2_title: "Premiere Pro", proj2_desc: "Cinematic edits & color grading + vertical edits.", proj3_title: "35awards", proj3_desc: "Award-winning photography.", proj4_title: "Advertising", proj4_desc: "Commercial campaigns.", more_btn: "More on request", contact_title: "Let's work together", contact_desc: "I'm currently available for freelance projects, collaborations, or full-time opportunities.", contact_email: "erfan.jr7@gmail.com", contact_phone: "+98 921 703 6278", form_title: "Send a message", form_name: "Full name", form_email: "Email address", form_msg: "Tell me about your project...", form_send: "Send inquiry", footer_text: "© 2026 Erfan Jahanbazi — Cinematic Portfolio." },
+      fa: { logo: "عرفان جهانبازی", nav_home: "خانه", nav_about: "درباره من", nav_skills: "مهارت‌ها", nav_work: "نمونه کار", nav_contact: "تماس", hero_badge: "🎬 قصه‌گوی تصویری", hero_name_intro: "سلام، من", hero_name: "عرفان جهانبازی", hero_title: "فیلمساز و تدوینگر", hero_desc: "۲۵ ساله | دارای مدرک لیسانس. من روایت‌های سینمایی را از طریق ویرایش عکس/فیلم، فیلمبرداری و فیلمسازی خلق می‌کنم. هر فریم داستانی را روایت می‌کند.", hero_btn: "مشاهده نمونه کارها", stat1_label: "سال تجربه", stat2_label: "پروژه انجام شده", stat3_label: "خلاقیت", about_title: "درباره من", about_p1: "من عرفان جهانبازی هستم، ۲۵ ساله، یک هنرمند تجسمی پرشور و دارای مدرک لیسانس. در طول این سال‌ها، تسلط زیادی بر کل فرآیند تولید - از برنامه‌ریزی پیش از تولید تا جادوی پس از تولید - پیدا کرده‌ام.", about_p2: "تخصص من شامل ویرایش عکس، ویرایش ویدیو، فیلمبرداری حرفه‌ای و فیلمسازی مستقل می‌شود. من معتقدم هر تصویر حامل احساسات است و هر ویرایشی ریتمی را می‌سازد. من با آژانس‌های خلاق، کارگردانان مستقل و تولیدکنندگان محتوا همکاری کرده‌ام تا داستان‌های بصری جذابی ارائه دهم.", info_degree: "مدرک کارشناسی", info_age: "۲۵ سال · مستقر در اصفهان", info_video: "فیلمبرداری · کارشناس فیلمسازی", info_edit: "ویرایش عکس · درجه‌بندی رنگ · افکت‌های ویژه", knowledge_title: "استاد اصول عکاسی", knowledge_text: "من عمیقاً قانون یک سوم، خطوط هدایتگر، تقارن و کادربندی را درک می‌کنم. تخصص من در نورپردازی (طبیعی و مصنوعی) به من این امکان را می‌دهد که حس و حال و عمق را به تصویر بکشم. من در موقعیت‌یابی سوژه‌ها، انتخاب زاویه‌ها و ترکیب‌بندی عکس‌های صحنه‌سازی شده و بی‌پرده، تیزبین هستم. چه از دوربین‌های حرفه‌ای DSLR، بدون آینه یا تلفن‌های همراه استفاده کنم، از تکنیک‌های پیشرفته‌ای مانند براکتینگ نوردهی، فوکوس استکینگ و کنترل‌های دستی موبایل برای تولید تصاویر خیره‌کننده در هر سناریویی استفاده می‌کنم.", right_card_title: "رویکرد سینمایی", right_card_text: "از مستند تا روایت داستانی، داستان‌گویی اصیل را از طریق لنز و تدوین به ارمغان می‌آورم.", software_title: "تسلط نرم‌افزاری:", software_list: "پریمیر پرو · داوینچی ریزالو · افتر افکت · لایت‌روم · فتوشاپ · فاینال کات", skills_title: "خدمات من", skill_videography: "فیلمبرداری", skill_videography_desc: "فیلمبرداری سینمایی برای تبلیغات، موزیک ویدیو، فیلم کوتاه. کارگردانی سر صحنه و کار با دوربین با تجهیزات حرفه‌ای.", skill_videoedit: "تدوین ویدیو", skill_videoedit_desc: "تدوین بی‌نقص، روایت داستان از طریق ریتم، طراحی صدا و درجه‌بندی رنگ. متخصص داوینچی و پریمیر.", skill_photoedit: "ویرایش عکس", skill_photoedit_desc: "روتوش، اصلاح رنگ، دستکاری و پردازش دسته‌ای. خلق جلوه‌های بصری خیره‌کننده برای برندها و پرتره‌ها.", skill_filmmaking: "فیلمسازی", skill_filmmaking_desc: "فیلمسازی کامل: فیلمنامه، کارگردانی، فیلمبرداری و پس‌تولید.", skill_photo: "📸 عکاسی (دوربین و موبایل)", skill_photo_desc: "متخصص در عکاسی با دوربین‌های DSLR/بدون آینه و گوشی‌های هوشمند. تسلط بر قانون یک سوم، الگوهای نورپردازی، موقعیت‌یابی، کنترل نوردهی و ترکیب‌بندی. من با هر وسیله‌ای، عکس‌های پرتره، منظره و خیابانی باکیفیتی ارائه می‌دهم.", portfolio_title: "پروژه‌های اخیر", proj1_title: "افتر افکت", proj1_desc: "موشن گرافیک و ریل + ویدیوهای عمودی جدید.", proj2_title: "پریمیر پرو", proj2_desc: "تدوین و درجه‌بندی سینمایی + تدوین عمودی جدید.", proj3_title: "35awards", proj3_desc: "عکاسی برنده جایزه.", proj4_title: "تبلیغاتی", proj4_desc: "کمپین‌های تجاری.", more_btn: "بیشتر در صورت درخواست", contact_title: "بیا با هم کار کنیم", contact_desc: "در حال حاضر برای پروژه‌های فریلنسری، همکاری یا فرصت تمام وقت در دسترس هستم.", contact_email: "erfan.jr7@gmail.com", contact_phone: " ٦٢٧٨ ٧٠٣ ٩٢١ ٩٨+", form_title: "ارسال پیام", form_name: "نام کامل", form_email: "آدرس ایمیل", form_msg: "درباره پروژه خود بگویید...", form_send: "ارسال درخواست", footer_text: "© ۲۰۲۶ عرفان جهانبازی — نمونه کار سینمایی." }
     };
     let currentLang = 'en';
     function updateLanguage(lang) {
