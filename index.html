@@ -4,11 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Erfan Jahanbazi | Portfolio (EN/FA - Real Form + Video Guide)</title>
-  <!-- Favicon -->
   <link rel="icon" type="image/png" sizes="32x32" href="ej-logo(1).png">
-  <!-- No external fonts - using custom Peyda font -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <!-- EmailJS SDK -->
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     * {
@@ -17,7 +14,6 @@
       box-sizing: border-box;
     }
 
-    /* Load custom Peyda font */
     @font-face {
       font-family: 'Peyda';
       src: url('Peyda-Regular.ttf') format('truetype');
@@ -26,7 +22,6 @@
       font-display: swap;
     }
 
-    /* Main font stack: Peyda first, then reliable system fallbacks */
     body {
       font-family: 'Peyda', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
       background-color: #fcfcfc;
@@ -35,13 +30,11 @@
       scroll-behavior: smooth;
     }
 
-    /* Base LTR */
     body {
       direction: ltr;
       text-align: left;
     }
 
-    /* RTL overrides for Persian - same Peyda font (supports Persian script) */
     body.lang-fa {
       direction: rtl;
       text-align: right;
@@ -78,9 +71,7 @@
       justify-content: flex-start;
     }
     
-    /* ----------------------------------------------
-       NAVBAR: Logo on left, nav-links center, language on right
-    ------------------------------------------------ */
+    /* NAVBAR: Logo on left, nav-links center, language on right */
     .nav-inner {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -92,14 +83,14 @@
       gap: 2rem;
       list-style: none;
       align-items: center;
-      justify-self: center; /* ensures centering within the grid column */
+      justify-self: center;
       margin: 0;
       padding: 0;
     }
     .lang-switch {
       display: flex;
       gap: 0.5rem;
-      justify-self: end; /* align language switch to the right side of its column */
+      justify-self: end;
     }
     .logo {
       font-size: 1.5rem;
@@ -111,12 +102,11 @@
       letter-spacing: -0.3px;
       justify-self: start;
     }
-    /* RTL adjustments for the navbar (flip order but keep center menu) */
     body.lang-fa .nav-inner {
       grid-template-columns: 1fr auto 1fr;
     }
     body.lang-fa .logo {
-      justify-self: start; /* still left in LTR? In RTL it becomes right automatically due to direction */
+      justify-self: start;
     }
     body.lang-fa .lang-switch {
       justify-self: end;
@@ -297,7 +287,6 @@
     .about {
       padding: 4rem 0;
       background: #ffffff;
-      border-radius: 32px;
     }
     .about-grid {
       display: flex;
@@ -336,7 +325,6 @@
       font-size: 1.1rem;
     }
 
-    /* Neutral knowledge card (no red) */
     .knowledge-neutral {
       margin-top: 2rem;
       background: #f5f5f8;
@@ -381,7 +369,6 @@
       flex-direction: column;
       min-height: 280px;
     }
-    /* FIXED icon gradient that never changes with language - strict rule */
     .skill-card i,
     body.lang-fa .skill-card i {
       font-size: 2.3rem;
@@ -406,8 +393,8 @@
       padding: 4rem 0;
     }
     .gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      display: flex;
+      flex-wrap: wrap;
       gap: 2rem;
       margin-top: 2rem;
     }
@@ -418,6 +405,10 @@
       box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.08);
       transition: transform 0.2s, cursor 0.2s;
       cursor: pointer;
+      flex: 1 1 260px;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
     }
     .project-item:hover {
       transform: translateY(-6px);
@@ -440,6 +431,7 @@
     }
     .project-info {
       padding: 1.5rem;
+      flex: 1;
     }
     .project-info h3 {
       font-size: 1.2rem;
@@ -460,7 +452,6 @@
       color: #c31432;
     }
 
-    /* Lightbox overlay */
     .lightbox {
       display: none;
       position: fixed;
@@ -507,7 +498,6 @@
       background: #c31432;
     }
 
-    /* Modal styles */
     .project-modal {
       display: none;
       position: fixed;
@@ -704,62 +694,7 @@
       font-size: 0.8rem;
       border-top: 1px solid #2a2a40;
     }
-    .guide-section {
-      background: #f9f7f3;
-      border-top: 2px solid #c31432;
-      padding: 2.5rem 1rem;
-      margin-top: 2rem;
-    }
-    body.lang-fa .guide-section {
-      direction: rtl;
-    }
-    .guide-container {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .guide-title {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #1a1a2e;
-      margin-bottom: 1rem;
-      border-right: 5px solid #c31432;
-      padding-right: 1rem;
-    }
-    body.lang-fa .guide-title {
-      border-right: none;
-      border-left: 5px solid #c31432;
-      padding-right: 0;
-      padding-left: 1rem;
-    }
-    .guide-content {
-      background: white;
-      border-radius: 28px;
-      padding: 1.8rem;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-      line-height: 1.7;
-      color: #2c2c3a;
-    }
-    .guide-content h3 {
-      margin-top: 1rem;
-      margin-bottom: 0.5rem;
-      color: #c31432;
-    }
-    .guide-content code {
-      background: #f0eef5;
-      padding: 0.2rem 0.5rem;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      direction: ltr;
-      display: inline-block;
-    }
-    .instruction-note {
-      background: #f0eef5;
-      border-radius: 28px;
-      padding: 1.5rem;
-      margin-top: 2rem;
-      font-size: 0.85rem;
-      color: #2d2f3b;
-    }
+
     @media (max-width: 800px) {
       .hero {
         flex-direction: column-reverse;
@@ -774,7 +709,6 @@
       .hero-stats {
         justify-content: center;
       }
-      /* mobile navbar: grid to column wrap, keep logo top, nav-links center, lang under? Better to adapt but keep centering */
       .nav-inner {
         grid-template-columns: 1fr;
         grid-template-rows: auto auto auto;
@@ -815,9 +749,6 @@
       .hero-image .avatar-placeholder {
         width: 280px;
         height: 280px;
-      }
-      .guide-title {
-        font-size: 1.4rem;
       }
       .modal-container { margin: 1rem; padding: 1rem; }
       .modal-title { font-size: 1.5rem; }
@@ -863,8 +794,8 @@
       </div>
     </section>
 
-    <div class="container" id="about">
-      <div class="about">
+    <section id="about" class="about">
+      <div class="container">
         <div class="about-grid">
           <div class="about-text">
             <h2 class="section-title" data-i18n="about_title">About me</h2>
@@ -885,27 +816,27 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- WHAT I DO section: exactly 4 skills (Videography, Video Editing, Photography (Camera & Mobile) with photo editing caption, Filmmaking) -->
     <section id="skills" class="skills-section">
       <div class="container">
         <h2 class="section-title" data-i18n="skills_title">What I do</h2>
         <div class="skills-grid">
           <div class="skill-card"><i class="fas fa-video"></i><h3 data-i18n="skill_videography">Videography</h3><p data-i18n="skill_videography_desc">Cinematic videography for commercials, music videos, short films. On-set direction & camera operation with professional gear.</p></div>
           <div class="skill-card"><i class="fas fa-cut"></i><h3 data-i18n="skill_videoedit">Video Editing</h3><p data-i18n="skill_videoedit_desc">Seamless editing, storytelling through rhythm, sound design, and color grading. DaVinci & Premiere expert.</p></div>
-          <!-- Photography (Camera & Mobile) + Photo Editing combined -->
-          <div class="skill-card"><i class="fas fa-camera"></i><h3 data-i18n="skill_photo_combined">Photography (Camera & Mobile)</h3><p data-i18n="skill_photo_combined_desc">Retouching, color correction, manipulation, batch processing + expert DSLR/mirrorless/smartphone photography. Mastery of rule of thirds, lighting patterns, composition, and mobile manual controls for stunning visuals.</p></div>
+          <div class="skill-card"><i class="fas fa-camera"></i><h3 data-i18n="skill_photo_combined">Photography</h3><p data-i18n="skill_photo_combined_desc">Retouching, color correction, manipulation, batch processing + expert DSLR/mirrorless/smartphone photography.</p></div>
           <div class="skill-card"><i class="fas fa-clapperboard"></i><h3 data-i18n="skill_filmmaking">Filmmaking</h3><p data-i18n="skill_filmmaking_desc">Full-cycle indie filmmaking: script, directing, cinematography & post-production. Award nominated shorts.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="work" class="work container">
-      <h2 class="section-title" data-i18n="portfolio_title">Recent projects</h2>
-      <div class="gallery" id="projects-gallery"></div>
-      <div style="text-align: center; margin-top: 2rem;">
-        <button id="moreProjectsBtn" class="btn btn-outline" data-i18n="more_btn" style="background: transparent; cursor: pointer;">See more on Instagram <i class="fab fa-instagram"></i></button>
+    <section id="work" class="work">
+      <div class="container">
+        <h2 class="section-title" data-i18n="portfolio_title">Recent projects</h2>
+        <div class="gallery" id="projects-gallery"></div>
+        <div style="text-align: center; margin-top: 2rem;">
+          <button id="moreProjectsBtn" class="btn btn-outline" data-i18n="more_btn" style="background: transparent; cursor: pointer;">See more on Instagram <i class="fab fa-instagram"></i></button>
+        </div>
       </div>
     </section>
 
@@ -940,7 +871,6 @@
     </div>
   </footer>
 
-  <!-- Modal -->
   <div id="projectModal" class="project-modal">
     <div class="modal-container">
       <div class="modal-close" id="modalCloseBtn">&times;</div>
@@ -956,7 +886,6 @@
   </div>
 
   <script>
-    // ======================== EMAILJS ========================
     (function(){ emailjs.init("IiMlk8cB8D2xSzpJG"); })();
 
     async function sendEmail(event) {
@@ -991,7 +920,6 @@
     }
     document.getElementById('realContactForm')?.addEventListener('submit', sendEmail);
 
-    // ======================== PROJECTS DATA ========================
     const projectsData = {
       After_Effects: { 
         titleEn: "After Effects", 
@@ -1049,19 +977,22 @@
           { type: "image", src: "pro-4-5.webp", caption: "AziCake: Cupcake" },
           { type: "image", src: "pro-5-5.webp", caption: "AziCake: Wedding Anniversary" },
           { type: "image", src: "pro-6-6.jpg", caption: "Huawei Watch" },
-          { type: "image", src: "pro-7-7.jpg", caption: "AziCake: Xbox One S" }
+          { type: "image", src: "pro-7-7.jpg", caption: "Xbox One S" },
+          { type: "image", src: "pro-8.png.", caption: "PFP/لوله و اتصالات" },
+          { type: "image", src: "pro-9.png", caption: "PFP/لوله و اتصالات" },
+          { type: "image", src: "pro-10.png", caption: "PFP/لوله و اتصالات" },
+          { type: "image", src: "pro-11.png", caption: "PFP/لوله و اتصالات" }
         ] 
       }
     };
     const galleryContainer = document.getElementById('projects-gallery');
     galleryContainer.innerHTML = `
-      <div class="project-item" data-project="After_Effects"><div class="project-img"><img src="after_logo.jpg" alt="After Effects"></div><div class="project-info"><h3 data-i18n="proj1_title">After Effects</h3><p data-i18n="proj1_desc">Showreel & motion graphics + vertical videos.</p><span class="tag">Motion</span></div></div>
-      <div class="project-item" data-project="Premiere_Pro"><div class="project-img"><img src="Ppro_logo.jpg" alt="Premiere Pro"></div><div class="project-info"><h3 data-i18n="proj2_title">Premiere Pro</h3><p data-i18n="proj2_desc">Cinematic edits & color grading + vertical edits.</p><span class="tag">Editing</span></div></div>
+      <div class="project-item" data-project="After_Effects"><div class="project-img"><img src="after_logo.png" alt="After Effects"></div><div class="project-info"><h3 data-i18n="proj1_title">After Effects</h3><p data-i18n="proj1_desc">Showreel & motion graphics + vertical videos.</p><span class="tag">Motion</span></div></div>
+      <div class="project-item" data-project="Premiere_Pro"><div class="project-img"><img src="Ppro_logo.png" alt="Premiere Pro"></div><div class="project-info"><h3 data-i18n="proj2_title">Premiere Pro</h3><p data-i18n="proj2_desc">Cinematic edits & color grading + vertical edits.</p><span class="tag">Editing</span></div></div>
       <div class="project-item" data-project="thirtyfive_awards"><div class="project-img"><img src="Pitem_3.jpg" alt="35awards"></div><div class="project-info"><h3 data-i18n="proj3_title">35awards</h3><p data-i18n="proj3_desc">Award-winning photography.</p><span class="tag">Photography</span></div></div>
       <div class="project-item" data-project="Advertising_photography"><div class="project-img"><img src="Add_logo.jpg" alt="Advertising"></div><div class="project-info"><h3 data-i18n="proj4_title">Advertising</h3><p data-i18n="proj4_desc">Commercial campaigns.</p><span class="tag">Commercial</span></div></div>
     `;
 
-    // modal logic
     const modal = document.getElementById('projectModal'), modalTitle = document.getElementById('modalTitle'), modalMediaGrid = document.getElementById('modalMediaGrid');
     function closeModal() { modal.style.display = 'none'; document.body.style.overflow = ''; }
     function openModalWithMedia(title, mediaItems) {
@@ -1093,7 +1024,6 @@
     document.getElementById('modalBackBtn').addEventListener('click', closeModal);
     window.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
 
-    // Lightbox system (only for modal images)
     const lightbox = document.getElementById('lightbox'), lightboxImg = document.getElementById('lightboxImg'), lightboxClose = document.getElementById('lightboxClose');
     function showLightbox(src) { lightboxImg.src = src; lightbox.classList.add('active'); }
     function closeLightbox() { lightbox.classList.remove('active'); lightboxImg.src = ''; }
@@ -1103,14 +1033,12 @@
     function attachModalImageLightbox() { const modalImgs = document.querySelectorAll('#modalMediaGrid .media-item img'); attachImageLightbox(modalImgs); }
     new MutationObserver(() => { attachModalImageLightbox(); }).observe(document.getElementById('modalMediaGrid'), { childList: true, subtree: true });
     
-    // See More On Instagram button -> Instagram
     const moreBtn = document.getElementById('moreProjectsBtn');
     const instagramUrl = "https://www.instagram.com/j_erfan_j?utm_source=qr&igsh=Yzh6ejB6eXRmbHll";
     moreBtn.addEventListener('click', () => {
       window.open(instagramUrl, '_blank');
     });
     
-    // Counting numbers animation
     function animateNumber(el) {
       const raw = el.getAttribute('data-count');
       if(!raw) return;
@@ -1132,7 +1060,6 @@
     }, { threshold: 0.3 });
     document.querySelectorAll('.stat-number').forEach(el => observerCount.observe(el));
     
-    // Translations
     const translations = {
       en: { logo: "ERFAN JAHANBAZI", nav_home: "Home", nav_about: "About", nav_skills: "Skills", nav_work: "Portfolio",
        nav_contact: "Contact", hero_name_intro: "Hi, I'm", hero_name: "Erfan Jahanbazi", hero_title: "Filmmaker & Editor",
@@ -1147,11 +1074,11 @@
                 knowledge_text: "I deeply understand the rule of thirds, leading lines, symmetry, and framing. My expertise in lighting (natural & artificial) allows me to sculpt mood and depth. I have a keen eye for positioning subjects, choosing angles, and composing both staged and candid shots. Whether using professional DSLR, mirrorless cameras, or mobile phones, I apply advanced techniques like exposure bracketing, focus stacking, and mobile manual controls to produce stunning visuals in any scenario.",
                  skills_title: "What I do", skill_videography: "Videography", skill_videography_desc: "Cinematic videography for commercials, music videos, short films. On-set direction & camera operation with professional gear.",
                   skill_videoedit: "Video Editing", skill_videoedit_desc: "Seamless editing, storytelling through rhythm, sound design, and color grading. DaVinci & Premiere expert.",
-                    skill_photo_combined: "Photography (Camera & Mobile)", skill_photo_combined_desc: "Retouching, color correction, manipulation, batch processing + expert DSLR/mirrorless/smartphone photography. Mastery of rule of thirds, lighting patterns, composition, and mobile manual controls for stunning visuals.",
+                    skill_photo_combined: "Photography", skill_photo_combined_desc: "Retouching, color correction, manipulation, batch processing + expert DSLR/mirrorless/smartphone photography.",
                    skill_filmmaking: "Filmmaking", skill_filmmaking_desc: "Full-cycle indie filmmaking: script, directing, cinematography & post-production. Award nominated shorts.",
                       portfolio_title: "Recent projects", proj1_title: "After Effects", proj1_desc: "Showreel, motion graphics & vertical videos.",
                        proj2_title: "Premiere Pro", proj2_desc: "Cinematic edits, color grading, vertical edits.", proj3_title: "35awards",
-                        proj3_desc: "Award-winning photography.", proj4_title: "Advertising", proj4_desc: "Commercial campaigns.",
+                        proj3_desc: "Award-winning & receive photography diplomas from a reputable institution.", proj4_title: "Advertising", proj4_desc: "Advertising photography for various brands and companies",
                          more_btn: "See more on Instagram", contact_title: "Let's work together",
                           contact_desc: "I'm currently available for freelance projects, collaborations, or full-time opportunities.",
                            contact_email: "erfan.jr7@gmail.com", contact_phone: "+98 921 703 6278", form_title: "Send a message",
@@ -1170,11 +1097,11 @@
                info_edit: "ویرایش عکس · درجه‌بندی رنگ · افکت‌های ویژه", knowledge_title: "استاد اصول عکاسی", knowledge_text: "من عمیقاً قانون یک سوم، خطوط هدایتگر، تقارن و کادربندی را درک می‌کنم. تخصص من در نورپردازی (طبیعی و مصنوعی) به من این امکان را می‌دهد که حس و حال و عمق را به تصویر بکشم. من در موقعیت‌یابی سوژه‌ها، انتخاب زاویه‌ها و ترکیب‌بندی عکس‌های صحنه‌سازی شده و بی‌پرده، تیزبین هستم. چه از دوربین‌های حرفه‌ای DSLR، بدون آینه یا تلفن‌های همراه استفاده کنم، از تکنیک‌های پیشرفته‌ای مانند براکتینگ نوردهی، فوکوس استکینگ و کنترل‌های دستی موبایل برای تولید تصاویر خیره‌کننده در هر سناریویی استفاده می‌کنم.",
                 skills_title: "خدمات من", skill_videography: "فیلمبرداری", skill_videography_desc: "فیلمبرداری سینمایی برای تبلیغات، موزیک ویدیو، فیلم کوتاه. کارگردانی سر صحنه و کار با دوربین با تجهیزات حرفه‌ای.",
                  skill_videoedit: "تدوین ویدیو", skill_videoedit_desc: "تدوین بی‌نقص، روایت داستان از طریق ریتم، طراحی صدا و درجه‌بندی رنگ. متخصص داوینچی و پریمیر.",
-                  skill_photo_combined: "عکاسی (دوربین و موبایل) + ویرایش عکس", skill_photo_combined_desc: "روتوش، اصلاح رنگ، دستکاری و پردازش دسته‌ای + عکاسی حرفه‌ای با دوربین DSLR/بدون آینه و گوشی هوشمند. تسلط بر قانون یک سوم، الگوهای نور، ترکیب‌بندی و کنترل‌های دستی موبایل برای خلق تصاویر خیره‌کننده.",
+                  skill_photo_combined: "عکاسی", skill_photo_combined_desc: "روتوش، اصلاح رنگ، دستکاری، پردازش دسته‌ای + عکاسی تخصصی با دوربین‌های DSLR/بدون آینه/گوشی‌های هوشمند.",
                    skill_filmmaking: "فیلمسازی", skill_filmmaking_desc: "فیلمسازی کامل: فیلمنامه، کارگردانی، فیلمبرداری و پس‌تولید.",
                      portfolio_title: "پروژه‌های اخیر", proj1_title: "افتر افکت", proj1_desc: "موشن گرافیک، ریل و ویدیوهای عمودی جدید.",
                       proj2_title: "پریمیر پرو", proj2_desc: "تدوین، درجه‌بندی سینمایی، تدوین عمودی جدید.", proj3_title: "35awards",
-                       proj3_desc: "عکاسی برنده جایزه.", proj4_title: "تبلیغاتی", proj4_desc: "کمپین‌های تجاری.", more_btn: "مشاهده بیشتر در اینستاگرام",
+                       proj3_desc: "برنده جوایز و دریافت دیپلم عکاسی از یک موسسه معتبر.", proj4_title: "تبلیغاتی", proj4_desc: "عکاسی تبلیغاتی برای برندها و شرکت‌های مختلف.", more_btn: "مشاهده بیشتر در اینستاگرام",
                         contact_title: "بیا با هم کار کنیم", contact_desc: "در حال حاضر برای پروژه‌های فریلنسری، همکاری یا فرصت تمام وقت در دسترس هستم.",
                          contact_email: "erfan.jr7@gmail.com", contact_phone: " ٦٢٧٨ ٧٠٣ ٩٢١ ٩٨+", form_title: "ارسال پیام", form_name: "نام کامل",
                           form_email: "آدرس ایمیل", form_msg: "درباره پروژه خود بگویید...", form_send: "ارسال درخواست",
