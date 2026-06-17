@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Erfan Jahanbazi | Portfolio (EN/FA - Real Form + Video Guide)</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="ej-logo(1).png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="ej-logo(1).png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
     </script>
     <style>
@@ -810,6 +810,58 @@
                 max-height: 400px;
             }
         }
+
+        
+        .film-frame-cursor {
+            position: fixed;
+            width: 42px;
+            height: 28px;
+            border: 3px solid #000000;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+        .film-frame-cursor::before,
+        .film-frame-cursor::after {
+            content: "";
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 3px solid #b63a3a;
+        }
+        .film-frame-cursor::before {
+            top: -6px;
+            left: -6px;
+            border-right: none;
+            border-bottom: none;
+        }
+        .film-frame-cursor::after {
+            bottom: -6px;
+            right: -6px;
+            border-left: none;
+            border-top: none;
+        }
+        .film-frame-cursor .c1,
+        .film-frame-cursor .c2 {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 3px solid #b63a3a;
+        }
+        .film-frame-cursor .c1 {
+            top: -6px;
+            right: -6px;
+            border-left: none;
+            border-bottom: none;
+        }
+        .film-frame-cursor .c2 {
+            bottom: -6px;
+            left: -6px;
+            border-right: none;
+            border-top: none;
+        }
+        
     </style>
 </head>
 <body>
@@ -939,6 +991,12 @@
     <div id="lightbox" class="lightbox">
         <div class="lightbox-close" id="lightboxClose">×</div>
         <img class="lightbox-img" id="lightboxImg" alt="">
+    </div>
+
+    
+    <div class="film-frame-cursor">
+        <span class="c1"></span>
+        <span class="c2"></span>
     </div>
 
     <script>
@@ -1383,6 +1441,39 @@
             }
             animate();
         })();
+
+        (function() {
+            const filmCursor = document.querySelector('.film-frame-cursor');
+            if (!filmCursor) return;
+
+            const targets = 'a, button, .btn, .project-item, .lang-btn, .modal-close, .modal-back, .lightbox-close';
+
+            document.addEventListener('mousemove', (e) => {
+                filmCursor.style.left = e.clientX + 'px';
+                filmCursor.style.top = e.clientY + 'px';
+            });
+
+            document.addEventListener('mouseover', (e) => {
+                if (e.target.closest(targets)) {
+                    filmCursor.style.display = 'block';
+                    document.body.style.cursor = 'none';
+                }
+            });
+
+            document.addEventListener('mouseout', (e) => {
+                if (e.target.closest(targets)) {
+                    filmCursor.style.display = 'none';
+                    document.body.style.cursor = 'default';
+                }
+            });
+
+            
+            document.addEventListener('mouseleave', () => {
+                filmCursor.style.display = 'none';
+                document.body.style.cursor = 'default';
+            });
+        })();
+        
     </script>
 </body>
 </html>
