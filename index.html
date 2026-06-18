@@ -1000,7 +1000,13 @@
     </div>
 
     <script>
-        (function() { emailjs.init("IiMlk8cB8D2xSzpJG"); })();
+        (function() {
+            try {
+                emailjs.init("IiMlk8cB8D2xSzpJG");
+            } catch (err) {
+                console.error('EmailJS failed to initialize (CDN may be blocked or unavailable):', err);
+            }
+        })();
 
         async function sendEmail(event) {
             event.preventDefault();
@@ -1448,6 +1454,20 @@
 
             const targets = 'a, button, .btn, .project-item, .lang-btn, .modal-close, .modal-back, .lightbox-close';
 
+            const isTouchDevice = window.matchMedia('(hover: none), (pointer: coarse)').matches ||
+                ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+
+            function hideFilmCursor() {
+                filmCursor.style.display = 'none';
+                document.body.style.cursor = 'default';
+            }
+
+            if (isTouchDevice) {
+
+                hideFilmCursor();
+                return;
+            }
+
             document.addEventListener('mousemove', (e) => {
                 filmCursor.style.left = e.clientX + 'px';
                 filmCursor.style.top = e.clientY + 'px';
@@ -1462,16 +1482,13 @@
 
             document.addEventListener('mouseout', (e) => {
                 if (e.target.closest(targets)) {
-                    filmCursor.style.display = 'none';
-                    document.body.style.cursor = 'default';
+                    hideFilmCursor();
                 }
             });
 
-            
-            document.addEventListener('mouseleave', () => {
-                filmCursor.style.display = 'none';
-                document.body.style.cursor = 'default';
-            });
+            document.addEventListener('mouseleave', hideFilmCursor);
+
+            document.addEventListener('touchstart', hideFilmCursor, { passive: true });
         })();
         
     </script>
