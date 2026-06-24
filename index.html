@@ -1125,8 +1125,11 @@
             modalTitle = document.getElementById('modalTitle'),
             modalMediaGrid = document.getElementById('modalMediaGrid');
 
-        function closeModal() { modal.style.display = 'none';
-            document.body.style.overflow = ''; }
+        function closeModal() {
+            modalMediaGrid.querySelectorAll('video').forEach(function(v) { v.pause(); });
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
 
         function openModalWithMedia(title, mediaItems) {
             modalTitle.textContent = title;
@@ -1179,6 +1182,14 @@
             attachImageLightbox(modalImgs); }
         new MutationObserver(() => { attachModalImageLightbox(); }).observe(document.getElementById('modalMediaGrid'), { childList: true,
             subtree: true });
+
+        modalMediaGrid.addEventListener('play', function(e) {
+            if (e.target.tagName === 'VIDEO') {
+                modalMediaGrid.querySelectorAll('video').forEach(function(v) {
+                    if (v !== e.target) v.pause();
+                });
+            }
+        }, true);
 
         const moreBtn = document.getElementById('moreProjectsBtn');
         const instagramUrl = "https://www.instagram.com/j_erfan_j?utm_source=qr&igsh=Yzh6ejB6eXRmbHll";
@@ -1236,8 +1247,8 @@
                 info_degree: "Bachelor's degree",
                 info_age: "Based in Isfahan, Iran",
                 info_video: "Videography & Filmmaking",
-                info_edit: "Post-Production & Visual Effects",
-                info_ai: "AI Generation (Image & Video)",
+                info_edit: "Visual Effects",
+                info_ai: "AI Generation",
                 knowledge_title: "Master of Photography Fundamentals",
                 knowledge_text: "I deeply understand the rule of thirds, leading lines, symmetry, and framing. My expertise in lighting (natural & artificial) allows me to sculpt mood and depth. I have a keen eye for positioning subjects, choosing angles, and composing both staged and candid shots. Whether using professional DSLR, mirrorless cameras, or mobile phones, I apply advanced techniques like exposure bracketing, focus stacking, and mobile manual controls to produce stunning visuals in any scenario.",
                 skills_title: "What I do",
@@ -1297,8 +1308,8 @@
                 info_degree: "مدرک کارشناسی",
                 info_age: "مستقر در اصفهان، ایران",
                 info_video: "فیلمبرداری و فیلمسازی",
-                info_edit: "پس از تولید و جلوه‌های ویژه",
-                info_ai: "تولید با هوش مصنوعی (تصویر و ویدیو)",
+                info_edit: "جلوه‌های ویژه",
+                info_ai: "تولید با هوش مصنوعی",
                 knowledge_title: "استاد اصول عکاسی",
                 knowledge_text: "من عمیقاً قانون یک سوم، خطوط هدایتگر، تقارن و کادربندی را درک می‌کنم. تخصص من در نورپردازی (طبیعی و مصنوعی) به من این امکان را می‌دهد که حس و حال و عمق را به تصویر بکشم. من در موقعیت‌یابی سوژه‌ها، انتخاب زاویه‌ها و ترکیب‌بندی عکس‌های صحنه‌سازی شده و بی‌پرده، تیزبین هستم. چه از دوربین‌های حرفه‌ای DSLR، بدون آینه یا تلفن‌های همراه استفاده کنم، از تکنیک‌های پیشرفته‌ای مانند براکتینگ نوردهی، فوکوس استکینگ و کنترل‌های دستی موبایل برای تولید تصاویر خیره‌کننده در هر سناریویی استفاده می‌کنم.",
                 skills_title: "خدمات من",
